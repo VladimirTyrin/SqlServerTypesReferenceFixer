@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace SqlServerTypesReferenceFixer
 {
@@ -47,7 +48,7 @@ namespace SqlServerTypesReferenceFixer
                     continue;
                 }
 
-                var projectFileText = File.ReadAllText(projectFile);
+                var projectFileText = File.ReadAllText(projectFile, Encoding.UTF8);
                 foreach (var pair in replacementDictionary)
                 {
                     if (! projectFileText.Contains(pair.Key))
@@ -56,7 +57,7 @@ namespace SqlServerTypesReferenceFixer
                     projectFileText = projectFileText.Replace(pair.Key, pair.Value);
                 }
                     
-                File.WriteAllText(projectFile, projectFileText);
+                File.WriteAllText(projectFile, projectFileText, Encoding.UTF8);
                 Console.WriteLine($"File {projectFile} fixed");
             }
         }
@@ -86,8 +87,8 @@ namespace SqlServerTypesReferenceFixer
             {
                 foreach (var nativeDllName in NativeDllList)
                 {
-                    var sourceContents = $"SqlServerTypes\\{architecture}\\{nativeDllName}>";
-                    var resultContents = $"..\\..\\packages\\Microsoft.SqlServer.Types.{SqlServerTypesVersion}\\nativeBinaries\\{architecture}\\{nativeDllName}>";
+                    var sourceContents = $"SqlServerTypes\\{architecture}\\{nativeDllName}\">";
+                    var resultContents = $"..\\..\\packages\\Microsoft.SqlServer.Types.{SqlServerTypesVersion}\\nativeBinaries\\{architecture}\\{nativeDllName}\">";
                     resultContents += $"\n        <Link>SqlServerTypes\\{architecture}\\SqlServerSpatial110.dll</Link>\n";
                     result.Add(sourceContents, resultContents);
                 }
