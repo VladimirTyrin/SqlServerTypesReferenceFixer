@@ -89,7 +89,7 @@ namespace SqlServerTypesReferenceFixer
                 {
                     var sourceContents = $"SqlServerTypes\\{architecture}\\{nativeDllName}\">";
                     var resultContents = $"..\\..\\packages\\Microsoft.SqlServer.Types.{SqlServerTypesVersion}\\nativeBinaries\\{architecture}\\{nativeDllName}\">";
-                    resultContents += $"\n      <Link>SqlServerTypes\\{architecture}\\SqlServerSpatial110.dll</Link>";
+                    resultContents += $"\n      <Link>SqlServerTypes\\{architecture}\\{nativeDllName}</Link>";
                     result.Add(sourceContents, resultContents);
                 }
             }
